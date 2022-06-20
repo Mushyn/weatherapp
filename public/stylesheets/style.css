@@ -1,5 +1,4 @@
 body {
-
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -37,6 +36,7 @@ a {
 
 
 .navItem{
+  margin-left: 10px;
   margin-bottom: 10px;
 }
 
@@ -47,4 +47,13 @@ a {
 .header {
   margin-bottom: 50px;
   color: #FFFFFF;
+}
+
+.navbar {
+  padding : 0px 10px;
+}
+
+.i {
+  font-size: 22px;
+  color: #ffc107;
 }
