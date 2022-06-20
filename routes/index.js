@@ -27,15 +27,21 @@ router.get('/weather', function(req, res, next) {
 router.post('/addcity', function(req, res, next) {
   var myObj = {city:req.body.newCity, weather:"cloudy", pictoUrl: '/images/picto-1.png', minTemp:11, maxTemp:17}
   let foundCity = false;
-  for (let element in cityDataWeather){
-    if ( element.city === req.body.newCity) {
+  for (let element of cityDataWeather){
+    console.log(element.city);
+    if ( element.city === myObj.city) {
       foundCity = true;
     }
   }
   if (foundCity !== true ) {
     cityDataWeather.push(myObj);
   }
-
   res.render('weather', {cityDatas: cityDataWeather});
 });
+
+router.get('/deletecity', function(req, res, next) {
+  cityDataWeather.splice(req.query.cityNumber,1);
+  res.render('weather', {cityDatas: cityDataWeather});
+});
+
 module.exports = router;

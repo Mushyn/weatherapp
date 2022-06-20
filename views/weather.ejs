@@ -50,9 +50,8 @@
                 
               <!-- Liste villes -->
               <% 
-              console.log(JSON.stringify(cityDatas));
-              for (let i=0; i<cityDatas.length; i++) { 
-            
+              if (cityDatas.length !== 0) {
+                for (let i=0; i<cityDatas.length; i++) { 
                 %>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   <%= cityDatas[i].city %>
@@ -62,10 +61,12 @@
                     <span class="badge bg-warning rounded-pill"><%= cityDatas[i].minTemp %>°c</span>
                     <span class="badge bg-secondary rounded-pill"><%= cityDatas[i].maxTemp %>°c</span>
                   </div>
-                  <span class="input-group-text btn"><i class="fa-regular fa-circle-xmark  icon"></i></span>
+                  <span class="input-group-text btn"><a href="/deletecity?cityNumber=<%= i %>"><i class="fa-regular fa-circle-xmark icon"></i></a></span>
                 </li>
-                <% } %>
-
+                <% } 
+              } else { %>
+                  <span class="empty">No city is selected</span> <%
+              } %>
               </ul>
 
 
