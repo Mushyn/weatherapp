@@ -7,4 +7,13 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'WeatherApp' });
 });
 
+router.get('/login', function(req, res, next) {
+  res.render('login', { title: 'WeatherApp - Login' });
+});
+
+router.get('/weather', function(req, res, next) {
+  res.render('weather', { title: 'WeatherApp' });
+});
+
+
 module.exports = router;

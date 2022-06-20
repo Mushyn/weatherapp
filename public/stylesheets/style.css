@@ -53,7 +53,7 @@ a {
   padding : 0px 10px;
 }
 
-.i {
+.icon {
   font-size: 22px;
-  color: #ffc107;
+  font: #ffc107!important;
 }
