@@ -2,6 +2,14 @@ var express = require('express');
 var router = express.Router();
 var session = require('express-session');
 
+
+var cityDataWeather = [
+  {city:"London", weather:"cloudy", pictoUrl: '/images/picto-1.png', minTemp:11, maxTemp:17},
+  {city:"Athens", weather:"sunny", pictoUrl: '/images/picto-1.png', minTemp:21, maxTemp:27},
+  {city:"Lisbon", weather:"rainy", pictoUrl: '/images/picto-1.png', minTemp:19, maxTemp:23},
+  {city:"Madrid", weather:"cloudy", pictoUrl: '/images/picto-1.png', minTemp:23, maxTemp:31},
+]
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'WeatherApp' });
@@ -12,7 +20,8 @@ router.get('/login', function(req, res, next) {
 });
 
 router.get('/weather', function(req, res, next) {
-  res.render('weather', { title: 'WeatherApp' });
+  console.log(cityDataWeather);
+  res.render('weather', {cityDatas: cityDataWeather});
 });
 
 

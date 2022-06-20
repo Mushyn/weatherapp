@@ -47,16 +47,22 @@
             </li>
                 
               <!-- Liste villes -->
+              <% 
+              console.log('hello');
+              for (let i=0; i<cityDatas.length; i++) { 
+                console.log(cityDatas[i]);
+                %>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Paris
+                  <%= cityDatas[i].city %>
                   <div>
-                    <span>Nuageux</span>
-                    <img src="/images/picto-1.png" class="rounded float-begin" alt="...">
-                    <span class="badge bg-primary rounded-pill">17°c</span>
-                    <span class="badge bg-secondary rounded-pill">19°c</span>
+                    <span><%= cityDatas[i].weather %></span>
+                    <img src="<%= cityDatas[i].pictoUrl %>" class="rounded float-begin" alt="...">
+                    <span class="badge bg-primary rounded-pill"><%= cityDatas[i].minTemp %>°c</span>
+                    <span class="badge bg-secondary rounded-pill"><%= cityDatas[i].maxTemp %>°c</span>
                   </div>
                   <span class="input-group-text btn"><i class="fa-regular fa-circle-xmark  icon"></i></span>
                 </li>
+                <% } %>
 
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Madrid

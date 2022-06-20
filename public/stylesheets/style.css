@@ -66,5 +66,9 @@ a {
 }
 
 .form-group {
-  margin : 20px;
+  margin: 20px;
+}
+
+label {
+  margin: 10px;
 }
