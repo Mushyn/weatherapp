@@ -67,7 +67,7 @@ router.post('/addcity', function(req, res, next) {
     }
     if (foundCity !== true ) {
       cityDataWeather.push(myObj);
-      console.Console.log('ajout ville : ',cityDataWeather);
+      console.log('ajout ville : ',cityDataWeather);
       updateCityWeather();
       erreur=false;
     }
