@@ -63,7 +63,7 @@
                     <span class="badge bg-warning rounded-pill"><%= cityDatas[i].minTemp %>°c</span>
                     <span class="badge bg-secondary rounded-pill"><%= cityDatas[i].maxTemp %>°c</span>
                   </div>
-                  <span class="input-group-text btn"><a href="/deletecity?cityNumber=<%= i %>" class="icon"><i class="fa-regular fa-circle-xmark icon"></i></a></span>
+                  <span class="input-group-text btn"><a href="/deletecity?cityName=<%= cityDatas[i].city %>" class="icon"><i class="fa-regular fa-circle-xmark icon"></i></a></span>
                 </li>
                 <% } 
               } else { %>
