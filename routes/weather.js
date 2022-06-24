@@ -11,12 +11,12 @@ router.get('/', async function(req, res, next) {
   console.log('test session', req.session);
   if(req.session.email){
     console.log('session active', req.session.userName);
+    var cityDataWeather = await cityModel.find();
+    res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
   } else {
     console.log('pas de session active');
     res.redirect('/login');
   }
-  var cityDataWeather = await cityModel.find();
-  res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
 });
 
 /* ---- ajouter une ville  ---- */
@@ -27,7 +27,7 @@ router.post('/addcity', async function(req, res, next) {
     console.log('session active', req.session.userName);
     var erreur = false;
     /* Verifie que le web service connait la ville */
-    let myNewCity = checkCityExist(req.body.newCity)
+    let myNewCity = openweatherCityInfo(req.body.newCity)
     //est-ce que la fonction web service a trouvé la ville recherchée ?
     if (myNewCity.message !== 'city not found') {
       //Est-ce que la ville est déjà dans la base ?
@@ -43,8 +43,11 @@ router.post('/addcity', async function(req, res, next) {
           pictoUrl: myNewCity.pictoUrl,
           weather: myNewCity.weather,
           minTemp: myNewCity.minTemp,
-          maxTemp: myNewCity.maxTemp}
-          );
+          maxTemp: myNewCity.maxTemp,
+          lng:myNewCity.lng,
+          lat:myNewCity.lat,
+          }
+        );
         await addCity.save()
       }
     } else {
@@ -58,8 +61,6 @@ router.post('/addcity', async function(req, res, next) {
     console.log('pas de session active');
     res.redirect('/login');
   }
-  
-
 });
 
 
@@ -72,16 +73,14 @@ router.get('/deletecity', async function(req, res, next) {
   console.log('test session', req.session);
   if(req.session.email){
     console.log('session active', req.session.userName);
+    var deletecity = await cityModel.deleteOne({ city: req.query.cityName});
+    var cityDataWeather = await cityModel.find();
+    erreur = false;
+    res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
   } else {
     console.log('pas de session active');
     res.redirect('/login');
   }
-
-  var deletecity = await cityModel.deleteOne({ city: req.query.cityName});
-  var cityDataWeather = await cityModel.find();
-  erreur = false;
-
-  res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
 });
 
 router.get('/logout', function(req, res, next) {
@@ -97,65 +96,50 @@ router.get('/updateweather', async function(req, res, next) {
   console.log('test session', req.session);
   if(req.session.email){
     console.log('session active', req.session.userName);
+    var cityDataWeather = await cityModel.find();
+    for (i=0; i<1;i++) {
+      console.log('ma source:', cityDataWeather[i]);
+      let newWeatherData = openweatherCityInfo(cityDataWeather[i].city);
+      console.log('mon update:',newWeatherData);
+      
+      var updatecities = await cityModel.updateOne(
+        {city:cityDataWeather[i].city},
+        {
+          weather: newWeatherData.weather,
+          pictoUrl:newWeatherData.pictoUrl,
+          minTemp: newWeatherData.minTemp,
+          maxTemp:newWeatherData.maxTemp,
+          lng:newWeatherData.lng,
+          lat:newWeatherData.lat,
+        }
+      )
+    }
+    erreur = false;
+    var cityDataWeather = await cityModel.find();
+    res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
   } else {
     console.log('pas de session active');
     res.redirect('/login');
   }
-
-
-  var cityDataWeather = await cityModel.find();
-  for (i=0; i<1;i++) {
-    console.log('ma source:', cityDataWeather[i]);
-    let newWeatherData = updateCityWeather(cityDataWeather[i].city);
-    console.log('mon update:',newWeatherData);
-    
-    var updatecities = await cityModel.updateOne(
-      {city:cityDataWeather[i].city},
-      {
-        weather: newWeatherData.weather,
-        pictoUrl:newWeatherData.pictoUrl,
-        minTemp: newWeatherData.minTemp,
-        maxTemp:newWeatherData.maxTemp,
-      }
-    )
-  }
-  erreur = false;
-  var cityDataWeather = await cityModel.find();
-  res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
 });
 
 
 
 /*fonction retournant un objet avec les informations de city mises à jour depuis le web services */
-const updateCityWeather = (cityName) => {
-    var element = {};
-    var requete = request('GET', `https://api.openweathermap.org/data/2.5/weather?q=${cityName.toLowerCase()}&appid=2ea9fc9094080a68c1b561115e028016&lang=fr&units=metric`)
-    var result = JSON.parse(requete.body);
-
-    if (result.message !=="city not found") {
-    element.city = result.name
-    element.pictoUrl = `owf owf-${result.weather[0].id}`;
-    element.weather = result.weather[0].description;
-    element.minTemp = result.main.temp_min;
-    element.maxTemp = result.main.temp_max;
-
-    }
-    console.log('data ws update:', element);
-    return element;
-  };
-
-  /*fonction qui vérifie l'existance d'une ville au travers du webservice */
-const checkCityExist = (cityName) => {
+/*Renvoie un objet avec l'ensembles des informations de la ville et une message (vide ou 'city not found')*/
+const openweatherCityInfo = (cityName) => {
   var element ={};
   var requete = request('GET', `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=2ea9fc9094080a68c1b561115e028016&lang=fr&units=metric`)
   var result = JSON.parse(requete.body);
-  
+  console.log(result);
   if (result.message !=="city not found") {
     element.city = result.name
     element.pictoUrl = `owf owf-${result.weather[0].id}`;
     element.weather = result.weather[0].description;
     element.minTemp = result.main.temp_min;
     element.maxTemp = result.main.temp_max;
+    element.lng = result.coord.lon,
+    element.lat =  result.coord.lat,
     element.message = ''
     
     return element;
@@ -165,8 +149,5 @@ const checkCityExist = (cityName) => {
   }  
 
 }
-
-
-
 
 module.exports = router;

@@ -6,6 +6,8 @@ var citySchema = mongoose.Schema({
     pictoUrl: String,
     minTemp: Number,
     maxTemp: Number,
+    lng: String,
+    lat: String,
 });
 
 var cityModel = mongoose.model('cities', citySchema);
