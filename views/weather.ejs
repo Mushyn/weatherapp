@@ -16,7 +16,7 @@
     <!-- HEADER -->
     <nav class="header navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Weather App</a>
-        <a class="logout" href="./login.html">Deconnexion</a>
+        <a class="logout" href="/weather/logout">Deconnexion</a>
    </nav> 
 
 
@@ -26,7 +26,7 @@
            <!-- Div Recherche -->
 
             <div class="col-12">
-              <form action="/addcity" method="post" class="display-inline">
+              <form action="/weather/addcity" method="post" class="display-inline">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter city name here" name="newCity" value="">
                     <button class="input-group-text btn btn-warning" id="inputGroup-addCity">Add</button>
@@ -45,8 +45,7 @@
           <!-- refresh weather forecast -->
                 <ul class="list-group">
                   <li class="list-group-item d-flex justify-content-center align-items-center">
-                    Update City
-                    <span class="input-group-text btn"><i class="fa-solid fa-arrows-rotate"></i></span>
+                    <a href="/weather/updateweather" class="input-group-text btn">Update City <i class="fa-solid fa-arrows-rotate"></i></a>
                 </li>
                 
               <!-- Liste villes -->
@@ -63,7 +62,7 @@
                     <span class="badge bg-warning rounded-pill"><%= cityDatas[i].minTemp %>°c</span>
                     <span class="badge bg-secondary rounded-pill"><%= cityDatas[i].maxTemp %>°c</span>
                   </div>
-                  <span class="input-group-text btn"><a href="/deletecity?cityName=<%= cityDatas[i].city %>" class="icon"><i class="fa-regular fa-circle-xmark icon"></i></a></span>
+                  <span class="input-group-text btn"><a href="/weather/deletecity?cityName=<%= cityDatas[i].city %>" class="icon"><i class="fa-regular fa-circle-xmark icon"></i></a></span>
                 </li>
                 <% } 
               } else { %>

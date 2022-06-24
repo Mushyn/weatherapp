@@ -26,20 +26,22 @@
             <div class="formArea">
               <h4 class="titleForm">Sign Up</h4>
 
-              <form>
+              <form action="/users/sign-up" method="post">
                 <div class="form-group">
                   <label for="exampleInputUsername">Username</label>
-                  <input type="text" class="form-control" placeholder="Enter username">
+                  <input required type="text" name="userName" class="form-control" placeholder="Enter username">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                  <input required type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control"  placeholder="Enter password">
+                  <input required type="password" name="password" class="form-control"  placeholder="Enter password">
                 </div>
-
+                <!--<div>
+                  <span class="alert alert-info" role="alert"><%= erreurMessage %></span>
+                </div>-->
                 <button type="submit" class="btn btn-info">Submit</button>
               </form>
             </div>
@@ -53,14 +55,14 @@
 
               <h4 class="titleForm">Sign In</h4>
 
-              <form action="/sign-in" method="POST">
+              <form action="/users/sign-in" method="POST">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
-                  <input name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                  <input required name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
-                  <input name="password" type="password" class="form-control" placeholder="Enter password">
+                  <input required name="password" type="password" class="form-control" placeholder="Enter password">
                 </div>
 
                 <button type="submit" class="btn btn-info">Submit</button>
@@ -72,7 +74,13 @@
 
         </div>
       </div>
-
+      <script>
+        let isErreur = '<%=erreurMessage%>';
+         console.log(isErreur);
+         if (isErreur !== ''){
+           window.alert(isErreur);
+         }
+       </script>
 
       <script src="https://kit.fontawesome.com/6fbdbcb130.js" crossorigin="anonymous"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
