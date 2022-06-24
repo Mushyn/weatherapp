@@ -44,6 +44,7 @@ router.post('/addcity', async function(req, res, next) {
           weather: myNewCity.weather,
           minTemp: myNewCity.minTemp,
           maxTemp: myNewCity.maxTemp,
+          icon: myNewCity.icon,
           lng:myNewCity.lng,
           lat:myNewCity.lat,
           }
@@ -109,6 +110,7 @@ router.get('/updateweather', async function(req, res, next) {
           pictoUrl:newWeatherData.pictoUrl,
           minTemp: newWeatherData.minTemp,
           maxTemp:newWeatherData.maxTemp,
+          icon: newWeatherData.icon,
           lng:newWeatherData.lng,
           lat:newWeatherData.lat,
         }
@@ -138,9 +140,10 @@ const openweatherCityInfo = (cityName) => {
     element.weather = result.weather[0].description;
     element.minTemp = result.main.temp_min;
     element.maxTemp = result.main.temp_max;
-    element.lng = result.coord.lon,
-    element.lat =  result.coord.lat,
-    element.message = ''
+    element.lng = result.coord.lon;
+    element.lat =  result.coord.lat;
+    element.icon = result.weather[0].icon;
+    element.message = '';
     
     return element;
   } else {

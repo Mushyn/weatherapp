@@ -72,3 +72,7 @@ a {
 label {
   margin: 10px;
 }
+
+#map {
+  height : 450px;
+}
