@@ -77,7 +77,8 @@ router.get('/deletecity', async function(req, res, next) {
     var deletecity = await cityModel.deleteOne({ city: req.query.cityName});
     var cityDataWeather = await cityModel.find();
     erreur = false;
-    res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
+    //res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
+    res.redirect('/weather');
   } else {
     console.log('pas de session active');
     res.redirect('/login');
@@ -91,7 +92,7 @@ router.get('/logout', function(req, res, next) {
   res.redirect('/login');
 });
 
-/*mettre à jour l'ensembel des données météo des villes suivies */
+/*mettre à jour l'ensemble des données météo des villes suivies */
 router.get('/updateweather', async function(req, res, next) {
 
   console.log('test session', req.session);
