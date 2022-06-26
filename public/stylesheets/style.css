@@ -76,3 +76,7 @@ label {
 #map {
   height : 450px;
 }
+
+#popup {
+  background-color: rgb(250,250,250,0.3);
+}

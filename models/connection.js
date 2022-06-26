@@ -6,7 +6,7 @@ var options = {
     useUnifiedTopology : true
    }
    mongoose.connect('mongodb+srv://Olivier:Innowie17Kendo87%26%21Atlas@cluster0.ogneg.mongodb.net/weatherapp?retryWrites=true&w=majority',
-     options,        
+    options,        
       function(err) {
        console.log(err);
       }
