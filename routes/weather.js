@@ -118,7 +118,8 @@ router.get('/updateweather', async function(req, res, next) {
     }
     erreur = false;
     var cityDataWeather = await cityModel.find();
-    res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
+    //res.render('weather', {cityDatas: cityDataWeather, erreur:erreur});
+    res.redirect('/weather');
   } else {
     console.log('pas de session active');
     res.redirect('/login');
